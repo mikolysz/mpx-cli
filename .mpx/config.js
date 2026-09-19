@@ -9,7 +9,12 @@ const getMmdOptions = () => {
     breaks: false,
     htmlTags: true,
     mathJax: {},
-    outMath: {},
+    mathDelimiterMode: "legacy",
+    outMath: {
+      output_format: "mathml",
+      include_mathml: true,
+      include_svg: false
+    },
     auto: false,
     openLinkInNewWindow: false,
     smiles: {

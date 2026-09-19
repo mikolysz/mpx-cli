@@ -18,6 +18,25 @@ afterAll(() => {
 });
 
 describe("converting markdown to html", () => {
+  test("should render starred LaTeX sections and native MathML", async () => {
+    const source = path.join("test", `${uuid.v4()}.mmd`);
+    const destination = path.join("test", `${uuid.v4()}.html`);
+    fs.outputFileSync(source, "\\section*{Unnumbered heading}\n\nInline math: $x^2$.\n");
+
+    try {
+      const result = await cli(["convert", source, destination], ".");
+      expect(result.code).toBe(0);
+      const html = fs.readFileSync(destination, "utf8");
+      expect(html).toContain("Unnumbered heading");
+      expect(html).not.toContain("\\section*");
+      expect(html).toContain("<math");
+      expect(html).not.toContain("<svg");
+    } finally {
+      del.sync(source);
+      del.sync(destination);
+    }
+  });
+
   test("should create .mpx directory in input directory if not found", async () => {
     let result = await cli(["build", testInput, testOutput], ".");
     expect(result.code).toBe(0);

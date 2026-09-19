@@ -2,7 +2,41 @@
 
 Document conversion for scientific documents.
 
+## About this fork
+
+This fork keeps the original `mpx` command-line interface while updating its
+local Mathpix Markdown-to-HTML conversion:
+
+- `mathpix-markdown-it` is upgraded from 1.0.63 to 3.0.1, adding support for
+  newer Mathpix Markdown syntax such as unnumbered `\\section*{...}` headings.
+  This matters for current Mathpix OCR output, which now emits these commands:
+  the old CLI leaves them unparsed in the generated HTML.
+- HTML output contains native, visible MathML instead of SVG equations. This
+  fixes the other major problem with the old CLI's HTML: equations were emitted
+  as inaccessible SVG graphics. Mathematics is now available directly to
+  browsers and screen readers without a hidden accessibility copy alongside an
+  SVG.
+
+Remote conversions still use the existing Mathpix APIs. The changes above
+apply when this CLI renders Mathpix Markdown as HTML, including `convert`,
+`serve`, and `build`.
+
 ## Install
+
+Install this fork globally from GitHub so the `mpx` command is available from
+any directory:
+
+```
+npm install -g github:mikolysz/mpx-cli
+```
+
+Then verify the installation:
+
+```
+mpx --version
+```
+
+The original published package can still be installed with:
 
 ```
 npm install -g @mathpix/mpx-cli
