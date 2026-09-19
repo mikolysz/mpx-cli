@@ -27,8 +27,7 @@
     "mpx": "./bin/cli.js"
   },
   "scripts": {
-    "test": "jest",
-    "prepare": "jest"
+    "test": "jest"
   },
   "engines": {
     "node": ">=10"
